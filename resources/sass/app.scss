@@ -1,0 +1,27 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.min.css');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600');
+
+// Variables
+@import 'variables';
+$fa-font-path:"../webfonts";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~admin-lte/dist/css/adminlte.css';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgb(2, 117, 216);
+}
+
+.router-link-exact-active {
+    background-color: #434344;
+    ;
+    color: #fff !important ;
+}
+
