@@ -153,8 +153,8 @@ export default {
     methods: {
 
         getPhoto() {
-            let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/" + this.form.photo;
-            return photo;
+            let img = (this.form.photo.length > 200) ? this.form.photo : "img/profile/" + this.form.photo;
+            return img;
         },
         updateInfo() {
             this.$Progress.start();

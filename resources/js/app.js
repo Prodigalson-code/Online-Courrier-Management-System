@@ -18,14 +18,18 @@ import { Form, HasError, AlertError } from 'vform';
 
 
 
-
+window.Fire =new Vue();
 
 
 
 
 import swal from 'sweetalert2'
+import VueSweetalert2 from 'vue-sweetalert2'
+
+Vue.use(VueSweetalert2);
 //const swal = require('sweetalert2')
 window.swal= swal;
+//window.swal = new Vue();
 
 const toast = swal.mixin({
     toast: true,

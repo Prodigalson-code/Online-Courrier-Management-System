@@ -52,7 +52,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-        $this->authorize(['isAdmin','isManager']);
+        $this->authorize('isAdmin');
+
         $this->validate($request,[
             'name' => 'required|string|max:25',
             'email' => 'required|email|max:30|unique:users',

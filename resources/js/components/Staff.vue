@@ -144,15 +144,25 @@ export default {
         updateStaff() {
             this.$Progress.start();
             this.form.put('api/user/' + this.form.id)
-                .then(() => {
+                .then((result) => {
 
                     $('#addNew').modal('hide');
                     Refresh.$emit('RefreshResult');
-                    swal.fire(
+                    if(result){
+                         swal.fire(
                         'Updated!',
                         'Staff has been Updated.',
                         'success'
                     );
+                    }else{
+                        this.$Progress.fail();
+                        swal.fire(
+                        'Warning!',
+                        'Unauthorized to perform this action.',
+                        'warning'
+                    );
+                    }
+
 
                     this.progress.finish();
 
@@ -160,11 +170,20 @@ export default {
                 .catch(() => {
 
                     //this.$Progress.fail();
-                            swal(
+
+                         this.$Progress.fail();
+                         this.$swal('Error','Unauthorized','warning');
+
+
+                           /*  swal(
                                     'Oops...',
                                     'Something went wrong!',
                                     'error'
-                                )
+                                ) */
+                               /*  if(e.value){
+                                     swal("Error",e,"warning");
+                                } */
+
 
                     /* swal({"Failed", "Something Went wrong.", "warning"});
                      this.$Progress.fail(); */
@@ -197,18 +216,28 @@ export default {
                 //send request to server
                 if (result.value) {
                     this.form.delete('api/user/' + id)
-                        .then(() => {
-
-                            swal.fire(
+                        .then((result) => {
+                            if(result){
+                                swal.fire(
                                 'Deleted!',
                                 'Staff has been deleted.',
                                 'success'
                             )
+                            }else{
+                                swal.fire(
+                                'Error!',
+                                'Unauthorized.',
+                                'warning'
+                            )
+                            }
+
 
                             Refresh.$emit('RefreshResult');
                         })
                         .catch(() => {
-                            swal.fire("Failed", "Something Went wrong.", "warning");
+                            //toast("Failed", "Something Went wrong.", "warning");
+                            this.$Progress.fail();
+                             this.$swal("Failed", "Something Went wrong.", "warning");
                         });
                 }
 
@@ -224,21 +253,29 @@ export default {
         createStaff() {
             this.$Progress.start();
             this.form.post('api/user')
-                .then(() => {
+                .then((result) => {
 
                     Refresh.$emit('RefreshResult');
                     $('#addNew').modal('hide');
-
-                    toast.fire({
+                    if(result){
+                         toast.fire({
                         icon: 'success',
                         title: 'Staff created successfully'
                     })
+                    }else{
+                         toast.fire({
+                        icon: 'warning',
+                        title: 'Unauthorized'
+                    })
+                    }
+
 
                     this.$Progress.finish();
 
                 })
                 .catch(() => {
-                    swal("Failed", "Something Went wrong.", "warning");
+                    this.$Progress.fail();
+                    this.$swal("Failed", "Something Went wrong.", "warning");
                 })
 
         }
