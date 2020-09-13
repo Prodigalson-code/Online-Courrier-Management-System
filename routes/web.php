@@ -33,8 +33,5 @@ Route::get('/customerhome', 'CustomerController@index')->name('customerhome');
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );
 Route::get('{path}','CustomerController@index')->where( 'path', '([A-z]+)?' );
 
-Route::get('/', function()
-{
-    return User::all();
-});
+
 
