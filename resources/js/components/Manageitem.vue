@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in item" :key="item.id">
+                            <tr v-for="item in item.data" :key="item.id">
                                 <td>{{ item.id }}</td>
                                 <td>{{item.type | upText }}</td>
                                 <td>{{ item.weight }}</td>
@@ -56,6 +56,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                 <div class="card-footer">
+                    <pagination :data="item" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -157,6 +160,13 @@ export default {
 
     methods: {
 
+         getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.item = response.data;
+				});
+		},
+
         updateItem() {
             this.$Progress.start();
             this.form.put('api/location/' + this.form.id)
@@ -175,7 +185,11 @@ export default {
                 })
                 .catch(() => {
                     this.$Progress.fail();
-                    swal("Failed", "Something Went wrong.", "warning");
+                         toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    //swal("Failed", "Something Went wrong.", "warning");
                 });
         },
 
@@ -216,7 +230,13 @@ export default {
                             Refresh.$emit('RefreshResult');
                         })
                         .catch(() => {
-                            swal("Failed", "Something Went wrong.", "warning");
+                            this.$Progress.fail();
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                            //swal("Failed", "Something Went wrong.", "warning");
                         });
                 }
 
@@ -227,7 +247,7 @@ export default {
         loadItem() {
             axios.get("api/location").then(({
                 data
-            }) => (this.item = data.data));
+            }) => (this.item = data));
         },
         createItem() {
             this.$Progress.start();
@@ -254,6 +274,16 @@ export default {
     },
     created() {
         this.loadItem();
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findLocation?q='+ query)
+            .then((data)=>{
+                this.item = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this.loadItem();
         });

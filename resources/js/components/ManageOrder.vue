@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="order in order" :key="order.id">
+                            <tr v-for="order in order.data" :key="order.id">
                                 <td>{{ order.name | upText }}</td>
                                 <td>{{ order.email }}</td>
                                 <td>{{ order.phone  }}</td>
@@ -79,6 +79,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                 <div class="card-footer">
+                    <pagination :data="order" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -177,6 +180,13 @@ export default {
 
     methods: {
 
+         getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.order = response.data;
+				});
+		},
+
           PaymentStatus(value){
             if(value==='unpaid'){
                 return true;
@@ -208,8 +218,14 @@ export default {
 
                 })
                 .catch(() => {
+                    //this.$Progress.fail();
                     this.$Progress.fail();
-                    swal("Failed", "Something Went wrong.", "warning");
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    //swal("Failed", "Something Went wrong.", "warning");
                 });
         },
 
@@ -230,13 +246,23 @@ export default {
         loadOrders() {
             axios.get("api/parselinfo").then(({
                 data
-            }) => (this.order = data.data));
+            }) => (this.order = data));
         },
 
 
     },
     created() {
         this.loadOrders();
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findOrder?q='+ query)
+            .then((data)=>{
+                this.order = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this.loadOrders();
         });

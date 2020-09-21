@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="staff in staff" :key="staff.id">
+                            <tr v-for="staff in staff.data" :key="staff.id">
                                 <td>{{ staff.id }}</td>
                                 <td>{{ staff.name }}</td>
                                 <td>{{ staff.email }}</td>
@@ -51,6 +51,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    <pagination :data="staff" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -100,8 +103,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'Close' }}</button>
+
                         <button v-show="!editmode" type="submit" class="btn btn-primary">{{ 'Add Staff' }}</button>
                         <button v-show="editmode" type="submit" class="btn btn-success">{{ 'Update Staff' }}</button>
+
                     </div>
                 </form>
             </div>
@@ -141,52 +146,37 @@ export default {
 
     methods: {
 
+       getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.staff = response.data;
+				});
+		},
+
         updateStaff() {
             this.$Progress.start();
             this.form.put('api/user/' + this.form.id)
-                .then((result) => {
+                .then(() => {
 
+                     Refresh.$emit('RefreshResult');
                     $('#addNew').modal('hide');
-                    Refresh.$emit('RefreshResult');
-                    if(result){
-                         swal.fire(
-                        'Updated!',
-                        'Staff has been Updated.',
-                        'success'
-                    );
-                    }else{
-                        this.$Progress.fail();
-                        swal.fire(
-                        'Warning!',
-                        'Unauthorized to perform this action.',
-                        'warning'
-                    );
-                    }
-
-
-                    this.progress.finish();
-
+                                    swal.fire(
+                                            'Updated!',
+                                            'Staff has been updated.',
+                                            'success'
+                                            );
+                        this.$Progress.finish();
                 })
                 .catch(() => {
+                    this.$Progress.fail();
+                       Refresh.$emit('RefreshResult');
+                    $('#addNew').modal('hide');
+                    toast.fire({
+                        icon:'warning',
+                        type:'warning',
+                        title: 'Error occureed.....',
 
-                    //this.$Progress.fail();
-
-                         this.$Progress.fail();
-                         this.$swal('Error','Unauthorized','warning');
-
-
-                           /*  swal(
-                                    'Oops...',
-                                    'Something went wrong!',
-                                    'error'
-                                ) */
-                               /*  if(e.value){
-                                     swal("Error",e,"warning");
-                                } */
-
-
-                    /* swal({"Failed", "Something Went wrong.", "warning"});
-                     this.$Progress.fail(); */
+                    });
                 });
         },
 
@@ -216,20 +206,14 @@ export default {
                 //send request to server
                 if (result.value) {
                     this.form.delete('api/user/' + id)
-                        .then((result) => {
-                            if(result){
+                        .then(() => {
+
                                 swal.fire(
-                                'Deleted!',
-                                'Staff has been deleted.',
-                                'success'
-                            )
-                            }else{
-                                swal.fire(
-                                'Error!',
-                                'Unauthorized.',
-                                'warning'
-                            )
-                            }
+                                            'Deleted!',
+                                            'Staff has been deleted.',
+                                            'success'
+                                            );
+
 
 
                             Refresh.$emit('RefreshResult');
@@ -237,7 +221,12 @@ export default {
                         .catch(() => {
                             //toast("Failed", "Something Went wrong.", "warning");
                             this.$Progress.fail();
-                             this.$swal("Failed", "Something Went wrong.", "warning");
+                              toast.fire({
+                                        icon:'warning',
+                                        title: 'Something went wrong.....',
+
+                                    });
+                             //this.$swal("Failed", "Something Went wrong.", "warning");
                         });
                 }
 
@@ -248,7 +237,7 @@ export default {
         loadStaff() {
             axios.get("api/user").then(({
                 data
-            }) => (this.staff = data.data));
+            }) => (this.staff = data));
         },
         createStaff() {
             this.$Progress.start();
@@ -257,32 +246,41 @@ export default {
 
                     Refresh.$emit('RefreshResult');
                     $('#addNew').modal('hide');
-                    if(result){
-                         toast.fire({
-                        icon: 'success',
-                        title: 'Staff created successfully'
-                    })
-                    }else{
-                         toast.fire({
-                        icon: 'warning',
-                        title: 'Unauthorized'
-                    })
-                    }
-
-
+                       swal.fire(
+                                'Created!',
+                                'Staff has been Created.',
+                                'success'
+                            );
                     this.$Progress.finish();
 
                 })
                 .catch(() => {
                     this.$Progress.fail();
-                    this.$swal("Failed", "Something Went wrong.", "warning");
-                })
 
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    //this.$swal("Failed", "Something Went wrong.", "warning");
+                });
         }
 
     },
     created() {
+       // var self =this;
+
+
         this.loadStaff();
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findUser?q='+ query)
+            .then((data)=>{
+                this.staff = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this.loadStaff();
         });

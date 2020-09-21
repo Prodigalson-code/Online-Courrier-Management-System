@@ -30,4 +30,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'clicksend' => [
+        'username' => env('CLICKSEND_USERNAME'),
+        'api_key'  => env('CLICKSEND_API_KEY'),
+        'sms_from' => env('CLICKSEND_SMS_FROM'), // optional
+    ],
+
+   /*  'clicksend' =>[
+        'username' =>env('gt'), //'YOUR CLICKSEND API USERNAME',
+        'api_key' =>env(gt), //'YOUR CLICKSEND API KEY',
+    ], */
+
 ];

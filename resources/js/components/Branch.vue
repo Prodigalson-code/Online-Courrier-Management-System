@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="branch in branch" :key="branch.id">
+                            <tr v-for="branch in branch.data" :key="branch.id">
                                 <td>{{ branch.id }}</td>
                                 <td>{{ branch.branchname }}</td>
                                 <td>{{ branch.branchemail }}</td>
@@ -53,6 +53,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                   <div class="card-footer">
+                    <pagination :data="branch" @pagination-change-page="getResults"></pagination>
+        </div>
             </div>
             <!-- /.card -->
         </div>
@@ -143,6 +146,13 @@ export default {
 
     methods: {
 
+         getResults(page = 1) {
+			axios.get('api/branch?page=' + page)
+				.then(response => {
+					this.branch = response.data;
+				});
+		},
+
         updateBranch() {
             this.$Progress.start();
             this.form.put('api/branch/' + this.form.id)
@@ -160,8 +170,14 @@ export default {
 
                 })
                 .catch(() => {
+                    //this.$Progress.fail();
                     this.$Progress.fail();
-                    swal("Failed", "Something Went wrong.", "warning");
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    //swal("Failed", "Something Went wrong.", "warning");
                 });
         },
 
@@ -202,7 +218,13 @@ export default {
                             Refresh.$emit('RefreshResult');
                         })
                         .catch(() => {
-                            swal("Failed", "Something Went wrong.", "warning");
+                            this.$Progress.fail();
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                           // swal("Failed", "Something Went wrong.", "warning");
                         });
                 }
 
@@ -213,7 +235,7 @@ export default {
         loadBranch() {
             axios.get("api/branch").then(({
                 data
-            }) => (this.branch = data.data));
+            }) => (this.branch = data));
         },
         createBranch() {
             this.$Progress.start();
@@ -232,7 +254,13 @@ export default {
 
                 })
                 .catch(() => {
-                    swal("Failed", "Something Went wrong.", "warning");
+                    this.$Progress.fail();
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    //swal("Failed", "Something Went wrong.", "warning");
                 })
 
         }
@@ -240,6 +268,16 @@ export default {
     },
     created() {
         this.loadBranch();
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findBranch?q='+ query)
+            .then((data)=>{
+                this.branch = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this.loadBranch();
         });

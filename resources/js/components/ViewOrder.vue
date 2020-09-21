@@ -27,7 +27,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr v-for="order in order" :key="order.id">
+                  <tr v-for="order in order.data" :key="order.id">
 
                       <td>
                           <a>
@@ -91,6 +91,9 @@
           </table>
         </div>
         <!-- /.card-body -->
+          <div class="card-footer">
+                    <pagination :data="order" @pagination-change-page="getResults"></pagination>
+        </div>
       </div>
       <!-- /.card -->
 
@@ -136,12 +139,17 @@ export default {
     },
 
     methods: {
-
+                getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.order = response.data;
+				});
+		},
 
         loaduserOrder() {
             axios.get("api/getuserorder").then(({
                 data
-            }) => (this.order = data.data));
+            }) => (this.order = data));
         },
 
         PaymentStatus(value){
@@ -165,6 +173,16 @@ export default {
        // this.fillForm();
 
         this. loaduserOrder() ;
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findOrder?q='+ query)
+            .then((data)=>{
+                this.order = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this. loaduserOrder() ;
         });

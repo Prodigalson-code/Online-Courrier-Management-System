@@ -25,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="items in items" :key="items.id">
+                            <tr v-for="items in items.data" :key="items.id">
                                 <td>{{ items.type | upText }}</td>
                                 <td>{{ items.weight }}</td>
                                 <td>{{ items.source | upText }}</td>
@@ -45,6 +45,9 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                  <div class="card-footer">
+                    <pagination :data="items" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -171,7 +174,7 @@
 
                         <div class="form-group">
                         <label for="price">{{ 'Price in Tsh.' }}</label>
-                            <input type="number" step="any" v-model="form.price" class="form-control" id="price" aria-describedby="priceeHelp" placeholder="Price " :class="{ 'is-invalid': form.errors.has('price') }" disabled>
+                            <input type="number" step="any"  v-model="form.price" class="form-control" id="price" aria-describedby="priceeHelp" placeholder="Price " :class="{ 'is-invalid': form.errors.has('price') }" disabled>
                             <has-error :form="form" field="price"></has-error>
                         </div>
 
@@ -262,6 +265,13 @@ export default {
 
     methods: {
 
+         getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.items = response.data;
+				});
+		},
+
 
 
         orderModal(items) {
@@ -284,7 +294,7 @@ export default {
         loadItems() {
             axios.get("api/location").then(({
                 data
-            }) => (this.items = data.data));
+            }) => (this.items = data));
         },
 
         fillForm(){
@@ -326,7 +336,13 @@ export default {
                 })
                 .catch(() => {
                     this.$Progress.fail();
-                    swal("Failed", "Something Went wrong.", "warning");
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                   // this.$Progress.fail();
+                    //swal("Failed", "Something Went wrong.", "warning");
                 })
 
         }
@@ -336,6 +352,16 @@ export default {
         this.loadUser();
 
         this.loadItems();
+        Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findOrder?q='+ query)
+            .then((data)=>{
+                this.items = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
         Refresh.$on('RefreshResult', () => {
             this.loadItems();
         });

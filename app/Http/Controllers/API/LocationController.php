@@ -27,7 +27,7 @@ class LocationController extends Controller
     public function getlocations()
     {
 
-        return Location::latest()->paginate(52);
+        return Location::latest()->paginate(10);
 
     }
 
@@ -73,6 +73,29 @@ class LocationController extends Controller
     public function show($id)
     {
         //
+    }
+
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        //
+        if($search = \Request::get('q')){
+        $location=Location::where(function($query) use ($search){
+            $query->where('source','LIKE',"%$search%")
+            ->orWhere('destination','LIKE',"%$search%")
+            ->orWhere('type','LIKE',"%$search%")
+            ->orWhere('weight','LIKE',"%$search%");
+        })->paginate(10);
+
+    }else{
+        $location=Location::latest()->paginate(10);
+    }
+        return $location;
     }
 
     /**

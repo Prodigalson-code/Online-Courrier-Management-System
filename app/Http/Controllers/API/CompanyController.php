@@ -41,9 +41,9 @@ class CompanyController extends Controller
 
 
         $this->validate($request,[
-            'companyname' => 'required|string|max:25',
-            'companyemail' => 'required|email|max:30|unique:companies',
-            'companyphone' => 'required|phone:TZ|unique:companies',
+            'companyname' => 'required|string',
+            'companyemail' => 'required|email|max:30',
+            'companyphone' => 'required|phone:TZ',
             'companyaddress' =>'required|string|max:50',
             'companycity' =>'required|string|max:25',
             'companylogo' =>'required',
@@ -88,9 +88,9 @@ class CompanyController extends Controller
 
         $this->validate($request,[
 
-             'companyname' => 'required|string|max:25',
-            'companyemail' => 'required|email|max:30|unique:companies',
-            'companyphone' => 'required|phone:TZ|unique:companies',
+             'companyname' => 'required|string',
+            'companyemail' => 'required|email|max:30',
+            'companyphone' => 'required|phone:TZ',
             'companyaddress' =>'required|string|max:50',
             'companycity' =>'required|string|max:25',
             'companylogo' =>'sometimes',

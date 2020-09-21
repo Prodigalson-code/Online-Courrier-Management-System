@@ -1,6 +1,8 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Jobes</a>
+        <a class="navbar-brand" href="{{ url('/') }}">
+            {{ config('app.name', 'Jobes Company') }}
+        </a>
         @if (Route::has('login'))
         <div class="top-right links">
             @auth

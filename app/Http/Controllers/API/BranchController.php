@@ -69,6 +69,28 @@ class BranchController extends Controller
        // return Branch::all();
     }
 
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        //
+        if($search = \Request::get('q')){
+        $branch=Branch::where(function($query) use ($search){
+            $query->where('branchname','LIKE',"%$search%")
+            ->orWhere('branchcity','LIKE',"%$search%")
+            ->orWhere('branchmanager','LIKE',"%$search%");
+        })->paginate(10);
+
+    }else{
+        $branch= Branch::latest()->paginate(10);
+    }
+        return $branch;
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -83,7 +105,7 @@ class BranchController extends Controller
 
         $this->validate($request,[
             'branchname' => 'required|string|max:25',
-            'branchemail' => 'required|email|max:30|unique',
+            'branchemail' => 'required|email|max:30',
             'branchphone' => 'required',
             'branchaddress' =>'required|string|max:50',
             'branchcity' =>'required|string|max:25',

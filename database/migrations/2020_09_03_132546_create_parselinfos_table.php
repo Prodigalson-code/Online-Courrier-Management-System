@@ -20,7 +20,8 @@ class CreateParselinfosTable extends Migration
 
             $table->foreign('user_id')
                     ->references('id')
-                    ->on('users');
+                    ->on('users')
+                    ->onDelete('cascade');
 
             $table->string('name');
             $table->string('email')->nullable();
@@ -39,6 +40,7 @@ class CreateParselinfosTable extends Migration
             $table->string('source');
             $table->string('destination');
             $table->string('distance');
+
             $table->string('paymentmethod');
             $table->string('senderPayment_name');
             $table->string('senderPayment_phone');
@@ -56,5 +58,6 @@ class CreateParselinfosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('parselinfos');
+
     }
 }

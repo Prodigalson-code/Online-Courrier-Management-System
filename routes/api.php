@@ -47,6 +47,11 @@ Route::middleware('auth:api')->get('/parselinfo', function (Request $request) {
     return $request->parselinfo();
 });
 
+Route::middleware('auth:api')->get('/blog', function (Request $request) {
+
+    return $request->blog();
+});
+
 
 
 Route::apiResources([
@@ -56,15 +61,27 @@ Route::apiResources([
     'items' => 'API\ItemController',
     'location' => 'API\LocationController',
     'parselinfo' => 'API\OrderController',
+    'setting'=>'API\LandingpageController',
+    'blog'=>'API\blogController'
 ]);
 
 Route::get('profile','API\UserController@profile');
+Route::post('save','API\UserController@customerstore');
+Route::put('updateCustomer/{id}','API\UserController@getcustomerupdate');
+Route::DELETE('destroy/{id}','API\UserController@customerdestroy');
 Route::put('profile','API\UserController@updateProfile');
 Route::get('customer','API\UserController@customer');
 Route::get('customer','API\UserController@customerindex');
 //Route::get('itemsorder','API\ItemController@getitems');
 Route::get('destination','API\LocationController@getlocations');
 Route::get('getuser','API\UserController@getuser');
+Route::get('findUser','API\UserController@search');
+Route::get('findCustomer','API\UserController@searchCustomer');
+Route::get('findOrder','API\OrderController@search');
+Route::get('findLocation','API\LocationController@search');
+Route::get('findItem','API\ItemController@search');
+Route::get('findBlog','API\blogController@search');
+Route::get('findBranch','API\BranchController@search');
 Route::get('getuserorder','API\OrderController@getuserorder');
 
 

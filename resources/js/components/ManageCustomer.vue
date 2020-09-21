@@ -30,7 +30,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="Customer in Customer" :key="Customer.id">
+                    <tr v-for="Customer in Customer.data" :key="Customer.id">
                       <td>{{ Customer.id }}</td>
                       <td>{{ Customer.name }}</td>
                       <td>{{ Customer.email }}</td>
@@ -53,6 +53,9 @@
                 </table>
               </div>
               <!-- /.card-body -->
+                <div class="card-footer">
+                    <pagination :data="Customer" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
             <!-- /.card -->
           </div>
@@ -150,29 +153,39 @@ Vue.component(AlertError.name, AlertError)
 
         methods: {
 
+              getResults(page = 1) {
+			axios.get('api/user?page=' + page)
+				.then(response => {
+					this.Customer = response.data;
+				});
+		},
+
             updateCustomer(){
                 this.$Progress.start();
-                this.form.put('api/user/'+this.form.id)
+                this.form.put('api/updateCustomer/'+this.form.id)
                 .then(()=>{
 
                         $('#addNew').modal('hide');
                          Refresh.$emit('RefreshResult');
-                         /*  swal.fire(
+                          swal.fire(
                                    'Updated!',
                                     'Customer has been Updated.',
                                     'success'
-                                 ); */
-                                  toast.fire({
-                                        icon: 'success',
-                                        title: 'Customer Updated successfully'
-                                    })
+                                 );
 
-                        this.progress.finish();
+
+                        this.$Progress.finish();
 
                 })
                 .catch(()=>{
-                    //this.$Progress.fail();
-                    swal("Failed","Something Went wrong.","warning");
+                    this.$Progress.fail();
+                   /*  $('#addNew').modal('hide');
+                     Refresh.$emit('RefreshResult'); */
+                        toast.fire({
+                                        icon: 'warning',
+                                        title: 'Something wrong...',
+                                    })
+                   // swal("Failed","Something Went wrong.","warning");
 
                 });
             },
@@ -204,7 +217,7 @@ Vue.component(AlertError.name, AlertError)
                         }).then((result) => {
                             //send request to server
                             if (result.value) {
-                                    this.form.delete('api/user/'+id)
+                                    this.form.delete('api/destroy/'+id)
                                     .then(()=>{
 
                                             swal.fire(
@@ -216,7 +229,12 @@ Vue.component(AlertError.name, AlertError)
                                         Refresh.$emit('RefreshResult');
                                     })
                                     .catch(()=>{
-                                        swal("Failed","Something Went wrong.","warning");
+                                        this.$Progress.fail();
+                                        toast.fire({
+                                          icon:'warning',
+                                          title:'Something wrong.....',
+                                        });
+                                       // swal("Failed","Something Went wrong.","warning");
                                     });
                             }
 
@@ -226,11 +244,11 @@ Vue.component(AlertError.name, AlertError)
             },
 
             loadCustomer(){
-                axios.get("api/customer").then(({data})=>(this.Customer = data.data));
+                axios.get("api/customer").then(({data})=>(this.Customer = data));
             },
             createCustomer(){
                 this.$Progress.start();
-                this.form.post('api/user')
+                this.form.post('api/save')
                 .then(()=>{
 
                     Refresh.$emit('RefreshResult');
@@ -246,7 +264,13 @@ Vue.component(AlertError.name, AlertError)
 
                 })
                 .catch(()=>{
-                     swal("Failed","Something Went wrong.","warning");
+                    this.$Progress.fail();
+
+                        toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something wrong....',
+                                 });
+                    // swal("Failed","Something Went wrong.","warning");
                 })
 
 
@@ -256,6 +280,16 @@ Vue.component(AlertError.name, AlertError)
         },
         created() {
             this.loadCustomer();
+            Fire.$on('searching', () => {
+             let query=this.$parent.search;
+            axios.get('api/findCustomer?q='+ query)
+            .then((data)=>{
+                this.Customer = data.data
+            })
+            .catch(()=>{
+
+            });
+        });
             Refresh.$on('RefreshResult',() => {
                 this.loadCustomer();
             });

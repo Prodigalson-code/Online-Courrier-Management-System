@@ -31,14 +31,14 @@ class UserController extends Controller
     public function index()
     {
         //
-        $user=User::where('type','!=',"customer")->oldest()->paginate(20);
+        $user=User::where('type','!=',"customer")->oldest()->paginate(10);
         return $user;
     }
 
     public function Customerindex()
     {
         //
-        $user=User::where('type','=',"customer")->oldest()->paginate(20);
+        $user=User::where('type','=',"customer")->oldest()->paginate(10);
         return $user;
     }
 
@@ -71,6 +71,34 @@ class UserController extends Controller
         ]);
     }
 
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function customerstore(Request $request)
+    {
+        //
+        $this->authorize('isManager');
+
+        $this->validate($request,[
+            'name' => 'required|string|max:25',
+            'email' => 'required|email|max:30|unique:users',
+            'phone' => 'required|phone:TZ|unique:users',
+            'type'=>'required',
+            'password' =>'required|string|min:8'
+        ]);
+
+        return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'type'=>$request['type'],
+            'password' => Hash::make($request['password']),
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -80,6 +108,46 @@ class UserController extends Controller
     public function show($id)
     {
         //
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        //
+        if($search = \Request::get('q')){
+        $users=User::where(function($query) use ($search){
+            $query->where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->orWhere('phone','LIKE',"%$search%")->orWhere('type','LIKE',"%$search%");
+        })->paginate(20);
+
+    }else{
+        $users=User::where('type','!=',"customer")->oldest()->paginate(10);
+    }
+        return $users;
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function searchCustomer()
+    {
+        //
+        if($search = \Request::get('q')){
+        $users=User::where(function($query) use ($search){
+            $query->where('name','LIKE',"%search%")->orWhere('email','LIKE',"%$search%")->orWhere('phone','LIKE',"%$search%")->orWhere('type','LIKE',"%$search%");
+        })->paginate(20);
+
+    }else{
+        $users=User::where('type','=',"customer")->oldest()->paginate(10);
+    }
+        return $users;
     }
 
     /**
@@ -200,6 +268,37 @@ class UserController extends Controller
 
     }
 
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getcustomerupdate(Request $request, $id)
+    {
+        //
+        $user = User::findOrFail($id);
+        $this->authorize('isManager');
+
+        $this->validate($request,[
+            'name' => 'required|string|max:25',
+            'email' => 'required|email|max:30|unique:users,email,'.$user->id,
+            'phone' => 'required|phone:TZ|unique:users,phone,'.$user->id,
+            'password'=> 'sometimes|required|string|min:8'
+
+
+        ]);
+
+        if(!empty($request->password)){
+            $request->merge(['password'=>Hash::make($request['password'])]);
+        }
+
+        $user->update($request->all());
+        Parselinfo::where('user_id',$user->id)->update(['phone'=>$user->phone,'email'=>$user->email,'name'=>$user->name,]);
+
+    }
+
 
 
     public function customerupdate(Request $request, $id)
@@ -239,6 +338,22 @@ class UserController extends Controller
     {
         //
         $this->authorize('isAdmin');
+        $user =User::findOrFail($id);
+        $user->delete();
+
+        return ['message'=>'Staff deleted'];
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function customerdestroy($id)
+    {
+        //
+        $this->authorize('isManager');
         $user =User::findOrFail($id);
         $user->delete();
 

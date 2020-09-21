@@ -6,8 +6,8 @@
             <div class="card card-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username text-left">{{ form.name }}</h3>
-                    <h5 class="widget-user-desc text-left">{{ form.email }}</h5>
+                    <h3 class="widget-user-username text-left">{{ this.form.name }}</h3>
+                    <h5 class="widget-user-desc text-left">{{ this.form.email }}</h5>
                 </div>
 
                 <div class="widget-user-image">
@@ -153,31 +153,39 @@ export default {
     methods: {
 
         getPhoto() {
-            let img = (this.form.photo.length > 200) ? this.form.photo : "img/profile/" + this.form.photo;
+            let img = (this.form.photo.length > 50) ? this.form.photo : "img/profile/" + this.form.photo;
             return img;
         },
-        updateInfo() {
+     updateInfo() {
             this.$Progress.start();
-            this.form.put('api/profile/')
-                .then(() => {
+            this.form.put('api/profile')
+                .then((result) => {
                     this.$Progress.finish();
-                    swal.fire(
-                        'Updated!',
-                        'Profile has been Updated.',
-                        'success'
-                    );
+                     Refresh.$emit('RefreshResult');
+                    $('#addNew').modal('hide');
+                    toast.fire({
+                        icon:'success',
+                        type:'success',
+                        title: 'Profile has been Updated.',
+                    });
                 })
                 .catch(() => {
                     this.$Progress.fail();
+                    toast.fire({
+                        icon:'warning',
+                        type:'warning',
+                        title: 'Error occureed.....',
+
+                    });
                 });
         },
 
-        fillForm(){
+       /*  fillForm(){
                axios.get("api/profile")
             .then(({
                 data
             }) => (this.form.fill(data)));
-        },
+        }, */
 
         updateProfile(event) {
             //console.log('uploading');

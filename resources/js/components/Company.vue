@@ -146,7 +146,7 @@ export default {
                 companycity: '',
                 companyphone: '',
                 companyemail: '',
-                companygst: ''
+                companygst: '',
 
             })
         }
@@ -155,7 +155,7 @@ export default {
     methods: {
 
         getPhoto(event) {
-            let companylogo = (event.length > 200) ? event : "img/logo/" + event;
+            let companylogo = (event.length > 50) ? event : "img/logo/" + event;
             return companylogo;
         },
 
@@ -195,12 +195,17 @@ export default {
                         'success'
                     );
 
-                    this.progress.finish();
+                    this.$progress.finish();
 
                 })
                 .catch(() => {
                     this.$Progress.fail();
-                    swal("Failed", "Something Went wrong.", "warning");
+                      toast.fire({
+                        icon: 'warning',
+                        title: 'Something went wrong...'
+                    });
+                    //swal("Failed", "Something Went wrong.", "warning");
+
                 });
         },
 
@@ -241,7 +246,12 @@ export default {
                             Refresh.$emit('RefreshResult');
                         })
                         .catch(() => {
-                            swal("Failed", "Something Went wrong.", "warning");
+                            this.$Progress.fail();
+                              toast.fire({
+                                        icon: 'warning',
+                                        title: 'Something went wrong...'
+                                    });
+                           // swal("Failed", "Something Went wrong.", "warning");
                         });
                 }
 
@@ -263,17 +273,23 @@ export default {
                     Refresh.$emit('RefreshResult');
                     $('#addNew').modal('hide');
 
-                    toast.fire({
-                        icon: 'success',
-                        title: 'Company created successfully'
-                    })
+                    swal.fire(
+                                'Created!',
+                                'Company has been created successfully.',
+                                'success'
+                            );
 
                     this.$Progress.finish();
 
                 })
                 .catch(() => {
-                    swal("Failed", "Something Went wrong.", "warning");
-                })
+                    this.$Progress.fail();
+                     toast.fire({
+                        icon: 'warning',
+                        title: 'Something went wrong...'
+                    });
+                   // swal("Failed", "Something Went wrong.", "warning");
+                });
 
         }
 

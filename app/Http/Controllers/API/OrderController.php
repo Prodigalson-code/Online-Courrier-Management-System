@@ -64,6 +64,7 @@ class OrderController extends Controller
 
         $data = $request->all();
         $data['user_id'] = $request->user()->id;
+        $data['price']=$request->price *$request->package_quantity;
          return Parselinfo::create($data);
 
 
@@ -78,6 +79,33 @@ class OrderController extends Controller
     public function show($id)
     {
         //
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        //
+        if($search = \Request::get('q')){
+        $parsel=Parselinfo::where(function($query) use ($search){
+            $query->where('name','LIKE',"%$search%")
+            ->orWhere('recever_name','LIKE',"%$search%")
+            ->orWhere('package_name','LIKE',"%$search%")
+            ->orWhere('source','LIKE',"%$search%")
+            ->orWhere('destination','LIKE',"%$search%")
+            ->orWhere('phone','LIKE',"%$search%")
+            ->orWhere('recever_phone','LIKE',"%$search%")
+            ->orWhere('type','LIKE',"%$search%");
+        })->paginate(10);
+
+    }else{
+        $parsel= Parselinfo::latest()->paginate(10);
+    }
+        return $parsel;
     }
 
     /**

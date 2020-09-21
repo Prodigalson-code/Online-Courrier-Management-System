@@ -8,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
@@ -33,6 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 <body class="hold-transition sidebar-mini">
+
 <div class="wrapper" id="app">
 
   <!-- Navbar -->
@@ -51,16 +53,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    <div class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
+          <button class="btn btn-navbar" @click="searchit">
             <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
-    </form>
+    </div>
 
 
     <ul class="navbar-nav ml-auto">
@@ -178,8 +180,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <router-link to="index3.html" class="brand-link">
-      <img src="#" alt="logo" class="brand-image img-circle elevation-3"
+        @php($company=\App\Company::all())
+        @foreach($company as $company)
+      <img src="{{ asset('img/logo') . '/' . $company->companylogo }}" alt="logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
+           @endforeach
       <span class="brand-text font-weight-light">{{ 'Jobes Company' }}</span>
     </router-link>
 
@@ -188,7 +193,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('img/profile') . '/' . Auth::user()->photo }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('img/profile') . '/' . Auth::user()->photo }} " class="img-circle elevation-2" alt="profile">
         </div>
         <div class="info">
           <router-link to="#" class="d-block">{{ Auth::user()->name }}</router-link>
@@ -202,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
                @if(Gate::check('isAdmin') || Gate::check('isManager'))
                <li class="nav-item">
-                <router-link  to="/dashboard" class="nav-link">
+                <router-link  to="/profile" class="nav-link active">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     {{ 'Dashboard' }}

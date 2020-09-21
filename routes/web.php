@@ -21,14 +21,14 @@ use Illuminate\Support\Facades\Auth;
 }); */
 
 Route::get('/', function () {
-    return view('landing-page/welcome');
+    return view('welcomorg');
 });
 
 Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/customerhome', 'CustomerController@index')->name('customerhome');
+//Route::get('/customerhome', 'CustomerController@index')->name('customerhome');
 
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );
 Route::get('{path}','CustomerController@index')->where( 'path', '([A-z]+)?' );

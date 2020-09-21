@@ -28,7 +28,7 @@ class ItemController extends Controller
     public function getitems()
     {
 
-        return Item::latest()->paginate(52);
+        return Item::latest()->paginate(10);
     }
 
     /**
@@ -71,6 +71,28 @@ class ItemController extends Controller
     public function show($id)
     {
         //
+    }
+
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        //
+        if($search = \Request::get('q')){
+        $item=Item::where(function($query) use ($search){
+            $query->where('source','LIKE',"%$search%")
+            ->orWhere('destination','LIKE',"%$search%")
+            ->orWhere('weight','LIKE',"%$search%");
+        })->paginate(10);
+
+    }else{
+        $item=Item::latest()->paginate(10);
+    }
+        return $item;
     }
 
     /**

@@ -18,30 +18,26 @@ import { Form, HasError, AlertError } from 'vform';
 
 
 
-window.Fire =new Vue();
+window.Fire=new Vue();
 
 
 
 
-import swal from 'sweetalert2'
-import VueSweetalert2 from 'vue-sweetalert2'
-
-Vue.use(VueSweetalert2);
-//const swal = require('sweetalert2')
-window.swal= swal;
-//window.swal = new Vue();
-
-const toast = swal.mixin({
-    toast: true,
-    position: 'top-end',
+//import swal from 'sweetalert2'
+import swal from 'sweetalert2';
+window.swal = swal;
+const toast =swal.mixin({
+    toast:true,
+    position:'top-end',
     showConfirmButton: false,
-    timer: 6000,
-    timerProgressBar: true,
-    onOpen: (toast) => {
-      toast.addEventListener('mouseenter', swal.stopTimer)
-      toast.addEventListener('mouseleave', swal.resumeTimer)
-    }
-  });
+    timer:3000
+
+});
+
+
+//Vue.use(VueSweetalert2);
+
+
 
   window.toast = toast;
 
@@ -49,6 +45,7 @@ const toast = swal.mixin({
 window.Form= Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+Vue.component('pagination',require('laravel-vue-pagination'));
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
@@ -66,7 +63,7 @@ let routes = [
     { path: '/staff', component: require('./components/Staff.vue').default},
     { path: '/profile', component: require('./components/Profile.vue').default},
     //{ path: '/userprofile', component: require('./components/customer/Profile.vue').default},
-    { path: '/customers', component: require('./components/Customers.vue').default},
+   // { path: '/customers', component: require('./components/Customers.vue').default},
     { path: '/viewcustomers', component: require('./components/ManageCustomer.vue').default},
     { path: '/branch', component: require('./components/Branch.vue').default},
     { path: '/Company', component: require('./components/Company.vue').default},
@@ -91,6 +88,8 @@ const router = new VueRouter({
     routes // short for `routes: routes`
   })
 
+
+
   Vue.filter('upText',function (value){
     return value.charAt(0).toUpperCase() + value.slice(1)
   });
@@ -100,6 +99,7 @@ const router = new VueRouter({
   });
 
   window.Refresh= new Vue();
+  //window.Fire= new Vue();
 
 
 
@@ -128,5 +128,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data:{
+      search:'',
+    },
+    methods:{
+        searchit:_.debounce(() =>{
+            Fire.$emit('searching');
+        },200)
+    }
+
+
 });
