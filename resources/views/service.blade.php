@@ -156,38 +156,33 @@
 
 
         <section class="ftco-section">
-      <div class="container">
-        <div class="row">
-            @php($news=\App\Blog::all())
-             @foreach ( $news as $news )
+    	<div class="container">
+    		<div class="row justify-content-center pb-5 mb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">We offer Services</span>
+            <h2>{{ 'Our Company Services' }}</h2>
+          </div>
+        </div>
+            <div class="row">
+
+                @php($service=\App\Service::all())
+                @foreach ( $service as $service )
           <div class="col-md-4 services ftco-animate">
-            <div class="blog-entry align-self-stretch">
-
-              <div class="text mt-3 ">
-              	<div class="posted mb-3 d-flex">
-              		<div class="desc pl-3">
-
-              			<span>{{ 'Posted at:   ' }} {{ $news->created_at }}</span>
-              		</div>
-              	</div>
-                <h3 class="heading"><a href="#">{{ $news->title }}</a></h3>
-                <p>{{ $news->description }}</p>
+            <div class="d-block d-flex">
+              <div class="icon d-flex justify-content-center align-items-center">
+            		<span class="flaticon-car-service"></span>
               </div>
+              <div class="media-body pl-3">
+                <h3 class="heading">{{ $service->service_name }}</h3>
+                <p>{{ $service->description }}</p>
 
+              </div>
             </div>
           </div>
           @endforeach
-
-
-
-
-
         </div>
-        <div class="row mt-5">
-
-        </div>
-      </div>
-    </section>
+    	</div>
+    </section>n>
 
 
 

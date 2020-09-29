@@ -36,6 +36,7 @@ Route::get('/showhome', 'LandingpageController@showhome');
 Route::resource('/contactus','ContactusController');
 Route::resource('/news','NewsController');
 Route::resource('/about','AboutController');
+Route::resource('/services','ServiceController');
 
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );
 Route::get('{path}','CustomerController@index')->where( 'path', '([A-z]+)?' );

@@ -82,7 +82,7 @@
 	        <ul class="navbar-nav mr-auto">
 	        	<li class="nav-item active"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
 	        	<li class="nav-item"><a href="{{ route('about.index') }}" class="nav-link">About</a></li>
-	        	<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+	        	<li class="nav-item"><a href="{{ route('services.index') }}" class="nav-link">Services</a></li>
 	        	<li class="nav-item"><a href="{{ route('news.index') }}" class="nav-link">News</a></li>
                 <li class="nav-item"><a href="{{ route('contactus.index') }}" class="nav-link">Contact us</a></li>
             </ul>

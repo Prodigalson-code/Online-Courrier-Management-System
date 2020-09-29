@@ -4,15 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
-class CustomerController extends Controller
+class ServiceController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +14,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-       // $url=route('contactus');
-
+        return view('service');
     }
 
     /**
