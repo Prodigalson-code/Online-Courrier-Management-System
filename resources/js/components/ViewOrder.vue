@@ -12,16 +12,16 @@
               <thead>
                   <tr>
                       <th style="width: 40%">
-                          {{ 'Parsel Information'}}
+                          {{ 'Package Information'}}
                       </th>
                       <th style="width: 40%">
                           {{ 'Recever Information' }}
                       </th>
                       <th>
-                          {{ 'Parsel Status' }}
+                          {{ 'Package Status' }}
                       </th>
                       <th style="width: 10%" class="text-center">
-                          {{ 'Payment Status of Parsel' }}
+                          {{ 'Payment Status of Package' }}
                       </th>
 
                   </tr>
@@ -31,35 +31,35 @@
 
                       <td>
                           <a>
-                             <b>Parsel Name: </b> {{ order.package_name | upText}}
+                             <b>Package's Name: </b> {{ order.package_name | upText}}
                           </a>
                           <br>
                            <a>
-                              <b>Parsel Type: </b> {{ order.type | upText }}
+                              <b>Package's Type: </b> {{ order.type | upText }}
                           </a>
                           <br>
                            <a>
-                             <b>Parsel Weight: </b> {{ order.weight }}
+                             <b>Package's Weight(Kg): </b> {{ order.weight }}
                           </a>
                           <br>
                            <a>
-                              <b>Parsel Source: </b>{{ order.source | upText}}
+                              <b>Package's Source: </b>{{ order.source | upText}}
                           </a>
                           <br>
                            <a>
-                              <b>Parsel Destination: </b> {{ order.destination | upText}}
+                              <b>Package's Destination: </b> {{ order.destination | upText}}
                           </a>
                           <br>
                             <a>
-                              <b>Time To Destination: </b> {{ order.hrs }}
+                              <b>Time To Destination(Hrs): </b> {{ order.hrs }}
                           </a>
                           <br>
                            <a>
-                             <b> Parsel Price: </b>{{ order.price }} Tsh.
+                             <b> Package's Price(Tsh): </b>{{ order.price }} Tsh.
                           </a>
                           <br>
                            <a>
-                              <b>Parsel Quantity: </b> {{ order.package_quantity }}
+                              <b>Total Weight of package: </b> {{ order.package_quantity }}
                           </a>
                           <br>
                           <small>

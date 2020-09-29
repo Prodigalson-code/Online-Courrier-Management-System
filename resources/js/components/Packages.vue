@@ -14,13 +14,13 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>{{ 'Parsel Type' }}</th>
-                                <th>{{ 'Parsel Weight' }}</th>
+                                <th>{{ 'Package Type' }}</th>
+                                <th>{{ 'Package Weight in KG' }}</th>
                                 <th>{{ 'From' }}</th>
                                 <th>{{ 'To' }}</th>
-                                <th>{{ 'Distance Covered' }}</th>
+                                <th>{{ 'Distance Covered in KM' }}</th>
                                 <th>{{ 'Hrs Taken' }}</th>
-                                 <th>{{ 'Price' }}</th>
+                                 <th>{{ 'Price in Tsh' }}</th>
                                 <th>{{ 'Action' }}</th>
                             </tr>
                         </thead>
@@ -118,7 +118,7 @@
                          </div>
 
                          <div class="card-header text-white" style="background-color: #3d99f5;">
-                            <h3 class="card-title">{{ 'Parsel Details' }}</h3>
+                            <h3 class="card-title">{{ 'Package Details' }}</h3>
                          </div>
 
                           <div class="form-group">
@@ -128,7 +128,7 @@
                              </div>
 
                               <div class="form-group">
-                                <label for="amount">{{ 'Total Number Of Parsel' }}</label>
+                                <label for="amount">{{ 'Total Weight of Package' }}</label>
                                 <input type="number" step="any" v-model="form.package_quantity" class="form-control" id="quantity" aria-describedby="distanceHelp" placeholder="How many parsel do you have " :class="{ 'is-invalid': form.errors.has('package_quantity') }" >
                                 <has-error :form="form" field="package_quantity"></has-error>
                              </div>
@@ -143,7 +143,7 @@
 
 
                         <div class="form-group">
-                        <label for="weight">{{ 'Weight' }}</label>
+                        <label for="weight">{{ 'Weight in KG' }}</label>
                             <input type="number" step="any" v-model="form.weight" class="form-control" id="weight" aria-describedby="weightlHelp" placeholder="Item weight" :class="{ 'is-invalid': form.errors.has('weight') }" disabled>
                             <has-error :form="form" field="weight"></has-error>
                         </div>
@@ -173,7 +173,7 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="price">{{ 'Price in Tsh.' }}</label>
+                        <label for="price">{{ 'Price in Tsh per KG' }}</label>
                             <input type="number" step="any"  v-model="form.price" class="form-control" id="price" aria-describedby="priceeHelp" placeholder="Price " :class="{ 'is-invalid': form.errors.has('price') }" disabled>
                             <has-error :form="form" field="price"></has-error>
                         </div>

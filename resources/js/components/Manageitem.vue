@@ -20,10 +20,10 @@
                             <tr>
                                 <th>{{ 'SNO.' }}</th>
                                 <th>{{ 'Package type ' }}</th>
-                                <th>{{ 'Weight' }}</th>
+                                <th>{{ 'Weight in KG' }}</th>
                                 <th>{{ 'Source' }}</th>
                                  <th>{{ 'Destination' }}</th>
-                                  <th>{{ 'Distance' }}</th>
+                                  <th>{{ 'Distance in KM' }}</th>
                                    <th>{{ 'Hrs' }}</th>
                                     <th>{{ 'Cost' }}</th>
 
@@ -81,13 +81,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="amount">{{ 'Weight' }}</label>
+                            <label for="amount">{{ 'Weight in KG' }}</label>
                             <input type="number" step="any" v-model="form.weight" class="form-control" id="weight" aria-describedby="weightlHelp" placeholder="Item weight" :class="{ 'is-invalid': form.errors.has('weight') }">
                             <has-error :form="form" field="weight"></has-error>
                         </div>
 
                         <div class="form-group">
-                            <label for="amount">{{ 'Price' }}</label>
+                            <label for="amount">{{ 'Price in Tsh.' }}</label>
                             <input type="number" step="any" v-model="form.price" class="form-control" id="price" aria-describedby="priceeHelp" placeholder="Price " :class="{ 'is-invalid': form.errors.has('price') }">
                             <has-error :form="form" field="price"></has-error>
                         </div>
@@ -104,12 +104,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="amount">{{ 'Distance' }}</label>
+                            <label for="amount">{{ 'Distance in KM' }}</label>
                             <input type="number" step="any" v-model="form.distance" class="form-control" id="distance" aria-describedby="priceeHelp" placeholder="distance " :class="{ 'is-invalid': form.errors.has('distance') }">
                             <has-error :form="form" field="distance"></has-error>
                         </div>
                         <div class="form-group">
-                        <label for="amount">{{ 'Hrs' }}</label>
+                        <label for="amount">{{ 'Hrs Taken For Transportation' }}</label>
                             <input type="number" step="any" v-model="form.hrs" class="form-control" id="hrs" aria-describedby="priceeHelp" placeholder="hrs " :class="{ 'is-invalid': form.errors.has('hrs') }">
                             <has-error :form="form" field="hrs"></has-error>
                         </div>

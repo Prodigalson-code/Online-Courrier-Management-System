@@ -21,15 +21,15 @@
                                 <th>{{ 'Recever Email' }}</th>
                                  <th>{{ 'Recever Phone' }}</th>
                                 <th>{{ 'Recever Address' }}</th>
-                                <th>{{ 'Parsel Name' }}</th>
-                                <th>{{ 'Parsel Type' }}</th>
-                                <th>{{ 'Number Of Parsels' }}</th>
-                                <th>{{ 'Parsel Weight' }}</th>
-                                <th>{{ 'Parsel From' }}</th>
-                                <th>{{ 'Parsel To' }}</th>
-                                <th>{{ 'Distance Covered' }}</th>
+                                <th>{{ 'Package Name' }}</th>
+                                <th>{{ 'Package Type' }}</th>
+                                <th>{{ 'Total Weight Of Package' }}</th>
+                                <th>{{ 'Package Weight in KG' }}</th>
+                                <th>{{ 'Package From' }}</th>
+                                <th>{{ 'Package To' }}</th>
+                                <th>{{ 'Distance Covered in KM' }}</th>
                                 <th>{{ 'Hrs Taken' }}</th>
-                                 <th>{{ 'Price' }}</th>
+                                 <th>{{ 'Total Price in Tsh' }}</th>
                                 <th>{{ 'Transaction Name' }}</th>
                                 <th>{{ 'Transaction Phone' }}</th>
                                  <th>{{ 'Payment Method Used' }}</th>

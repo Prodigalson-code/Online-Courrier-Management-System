@@ -52,6 +52,7 @@ class OrderController extends Controller
             'paymentmethod'=>'required',
             'senderPayment_name'=>'required',
             'source'=>'required',
+            'hrs'=>'required',
             'destination'=>'required',
             'distance'=>'required',
             'senderPayment_phone'=>'required|phone:TZ',
