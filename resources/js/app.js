@@ -78,7 +78,10 @@ let routes = [
     //{ path: '/userpackage', component: require('./components/customer/Package.vue').default},
     { path: '/company', component: require('./components/Company.vue').default},
     { path: '/blog', component: require('./components/Blog.vue').default},
-    { path: '/report', component: require('./components/Report.vue').default}
+    { path: '/report', component: require('./components/Report.vue').default},
+    { path: '/contactus', component: require('./components/Contact.vue').default},
+    { path: '/aboutus', component: require('./components/About.vue').default},
+    { path: '/services', component: require('./components/Service.vue').default}
 
 
   ]
@@ -118,6 +121,7 @@ const router = new VueRouter({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
 
 
 /**

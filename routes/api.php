@@ -52,6 +52,16 @@ Route::middleware('auth:api')->get('/blog', function (Request $request) {
     return $request->blog();
 });
 
+Route::middleware('auth:api')->get('/about', function (Request $request) {
+
+    return $request->aboutus();
+});
+
+Route::middleware('auth:api')->get('/service', function (Request $request) {
+
+    return $request->service();
+});
+
 
 
 Route::apiResources([
@@ -62,7 +72,10 @@ Route::apiResources([
     'location' => 'API\LocationController',
     'parselinfo' => 'API\OrderController',
     'setting'=>'API\LandingpageController',
-    'blog'=>'API\blogController'
+    'blog'=>'API\blogController',
+    'about'=>'API\AboutusController',
+    'service'=>'API\ServiceController',
+
 ]);
 
 Route::get('profile','API\UserController@profile');

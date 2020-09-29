@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" v-model="form.companyaddress" class="form-control" id="address" aria-describedby="addressHelp" placeholder="address " :class="{ 'is-invalid': form.errors.has('address') }">
+                         <textarea class="form-control" v-model="form.companyaddress" id="address" rows="5"  placeholder="Address" :class="{ 'is-invalid': form.errors.has('companyaddress') }"></textarea>
                             <has-error :form="form" field="address"></has-error>
                         </div>
 
@@ -195,7 +195,7 @@ export default {
                         'success'
                     );
 
-                    this.$progress.finish();
+                    this.$Progress.finish();
 
                 })
                 .catch(() => {

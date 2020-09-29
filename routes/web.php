@@ -24,11 +24,18 @@ Route::get('/', function () {
     return view('welcomorg');
 });
 
+
+
 Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/customerhome', 'CustomerController@index')->name('customerhome');
+
+Route::get('/showhome', 'LandingpageController@showhome');
+Route::resource('/contactus','ContactusController');
+Route::resource('/news','NewsController');
+Route::resource('/about','AboutController');
 
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );
 Route::get('{path}','CustomerController@index')->where( 'path', '([A-z]+)?' );

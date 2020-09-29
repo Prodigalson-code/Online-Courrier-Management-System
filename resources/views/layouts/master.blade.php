@@ -14,7 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-  <title>{{ 'JobesCompany' }}</title>
+  <title>{{ 'jobes@jobes.com' }}</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Font Awesome Icons -->
  <link rel="stylesheet" href="/css/app.css">
@@ -217,7 +217,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
               @endif
 
-              @if(Gate::check('isAdmin') || Gate::check('isManager'))
+
+              @if(Gate::check('isAdmin') || Gate::check('isManager') || Gate::check('isAgent'))
+             <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                {{ 'Management' }}
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @if(Gate::check('isAdmin') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/staff" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
@@ -228,7 +239,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
-
               @if(Gate::check('isAdmin') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/viewcustomers" class="nav-link">
@@ -240,30 +250,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
-
-              <li class="nav-item">
-                <router-link to="/package" class="nav-link">
-                  <i class="nav-icon fas fa-box"></i>
-                  <p>
-                    {{ 'Request Sending  Parsel' }}
-
-                  </p>
-                </router-link>
-              </li>
-
-
-               <li class="nav-item">
-                <router-link to="/packageorder" class="nav-link">
-                  <i class="nav-icon fas fa-eye"></i>
-                  <p>
-                    {{ 'View Orders' }}
-
-                  </p>
-                </router-link>
-              </li>
-
-
-
               @if(Gate::check('isAgent') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/manageitem" class="nav-link">
@@ -275,17 +261,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
-
-              <li class="nav-item">
-                <router-link to="#" class="nav-link">
-                  <i class="nav-icon fas fa-map-marker-alt"></i>
-                  <p>
-                    {{ 'Track the Parcel' }}
-
-                  </p>
-                </router-link>
-              </li>
-
               @if(Gate::check('isAgent') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/packagemanage" class="nav-link">
@@ -297,7 +272,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
-
               @if(Gate::check('isAdmin') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/branch" class="nav-link">
@@ -309,7 +283,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
-
               @can('isAdmin')
               <li class="nav-item">
                 <router-link to="/company" class="nav-link">
@@ -321,8 +294,81 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endcan
+            </ul>
+          </li>
+          @endif
 
-                @can('isAdmin')
+          <li class="nav-item">
+                <router-link to="/package" class="nav-link">
+                  <i class="nav-icon fas fa-box"></i>
+                  <p>
+                    {{ 'Request Sending  Parsel' }}
+
+                  </p>
+                </router-link>
+              </li>
+
+              <li class="nav-item">
+                <router-link to="/packageorder" class="nav-link">
+                  <i class="nav-icon fas fa-eye"></i>
+                  <p>
+                    {{ 'View Orders' }}
+
+                  </p>
+                </router-link>
+              </li>
+
+              <li class="nav-item">
+                <router-link to="#" class="nav-link">
+                  <i class="nav-icon fas fa-map-marker-alt"></i>
+                  <p>
+                    {{ 'Track the Parcel' }}
+
+                  </p>
+                </router-link>
+              </li>
+
+
+
+
+
+              @can('isAdmin')
+             <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                {{ 'Home Page Settings' }}
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <router-link to="/contactus" class="nav-link">
+                  <i class="nav-icon fas  fa-building"></i>
+                  <p>
+                    {{ 'Fill Contact Info' }}
+
+                  </p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/aboutus" class="nav-link">
+                  <i class="nav-icon fas  fa-building"></i>
+                  <p>
+                    {{ 'Fill About info' }}
+
+                  </p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/services" class="nav-link">
+                  <i class="nav-icon fas  fa-building"></i>
+                  <p>
+                    {{ 'Fill Company Services' }}
+
+                  </p>
+                </router-link>
+              </li>
               <li class="nav-item">
                 <router-link to="/blog" class="nav-link">
                   <i class="nav-icon fas fa-blog"></i>
@@ -332,9 +378,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </router-link>
               </li>
-                @endcan
+            </ul>
+          </li>
+          @endcan
 
-                @if(Gate::check('isAdmin') || Gate::check('isManager'))
+          @if(Gate::check('isAdmin') || Gate::check('isManager'))
               <li class="nav-item">
                 <router-link to="/report" class="nav-link">
                   <i class="nav-icon fas fa-file"></i>
@@ -345,6 +393,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endif
+
 
               <li class="nav-item">
                 <router-link to="/profile" class="nav-link">

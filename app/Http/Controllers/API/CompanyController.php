@@ -44,10 +44,10 @@ class CompanyController extends Controller
             'companyname' => 'required|string',
             'companyemail' => 'required|email|max:30',
             'companyphone' => 'required|phone:TZ',
-            'companyaddress' =>'required|string|max:50',
+            'companyaddress' =>'required|string|max:100',
             'companycity' =>'required|string|max:25',
             'companylogo' =>'required',
-            'companygst'=>'required|numeric'
+            'companygst'=>'required|string'
 
         ]);
 
@@ -91,10 +91,10 @@ class CompanyController extends Controller
              'companyname' => 'required|string',
             'companyemail' => 'required|email|max:30',
             'companyphone' => 'required|phone:TZ',
-            'companyaddress' =>'required|string|max:50',
+            'companyaddress' =>'required|string|max:100',
             'companycity' =>'required|string|max:25',
             'companylogo' =>'sometimes',
-            'companygst'=>'required|numeric'
+            'companygst'=>'required|string'
         ]);
 
         $currentPhoto = $company->companylogo;

@@ -86,10 +86,11 @@
                             <has-error :form="form" field="phone"></has-error>
                         </div>
 
-                        <div class="form-group">
-                            <input type="textarea" v-model="form.branchaddress" class="form-control" id="branchaddress" aria-describedby="branchHelp" placeholder="Branch Address " :class="{ 'is-invalid': form.errors.has('branchaddress') }">
-                            <has-error :form="form" field="address"></has-error>
+                         <div class="form-group">
+                         <textarea class="form-control" v-model="form.branchaddress" id="branchaddress" rows="5"  placeholder="Address" :class="{ 'is-invalid': form.errors.has('branchaddress') }"></textarea>
+                            <has-error :form="form" field="branchaddress"></has-error>
                         </div>
+
 
                         <div class="form-group">
                             <input type="text" v-model="form.branchcity" class="form-control" id="branchcity" aria-describedby="cityHelp" placeholder="Branch City " :class="{ 'is-invalid': form.errors.has('branchcity') }">
@@ -166,7 +167,7 @@ export default {
                         'success'
                     );
 
-                    this.progress.finish();
+                    this.$Progress.finish();
 
                 })
                 .catch(() => {
