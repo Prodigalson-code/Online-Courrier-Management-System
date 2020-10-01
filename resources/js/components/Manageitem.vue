@@ -4,7 +4,7 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-white"  style="background-color: #3d99f5;">
                     <h3 class="card-title">{{ 'Item Details' }}</h3>
 
                     <div class="card-tools">
@@ -180,7 +180,7 @@ export default {
                         'success'
                     );
 
-                    this.progress.finish();
+                    this.$Progress.finish();
 
                 })
                 .catch(() => {

@@ -3,7 +3,7 @@
 
     <div class="row mt-5">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card text-white"  style="background-color: #3d99f5;">
                 <div class="card-header">
                     <h3 class="card-title">{{ 'Staff' }}</h3>
 

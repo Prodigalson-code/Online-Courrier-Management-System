@@ -123,13 +123,13 @@
 
                           <div class="form-group">
                              <label for="type">{{ 'Package Name' }}</label>
-                            <input type="text" v-model="form.package_name" class="form-control" id="type" aria-describedby="typeHelp" placeholder="Name of your Parsel" :class="{ 'is-invalid': form.errors.has('package_name') }" >
+                            <input type="text" v-model="form.package_name" class="form-control" id="type" aria-describedby="typeHelp" placeholder="Name of your Parcel" :class="{ 'is-invalid': form.errors.has('package_name') }" >
                             <has-error :form="form" field="package_name"></has-error>
                              </div>
 
                               <div class="form-group">
                                 <label for="amount">{{ 'Total Weight of Package' }}</label>
-                                <input type="number" step="any" v-model="form.package_quantity" class="form-control" id="quantity" aria-describedby="distanceHelp" placeholder="How many parsel do you have " :class="{ 'is-invalid': form.errors.has('package_quantity') }" >
+                                <input type="number" step="any" v-model="form.package_quantity" class="form-control" id="quantity" aria-describedby="distanceHelp" placeholder="Total parcel weight you have " :class="{ 'is-invalid': form.errors.has('package_quantity') }" >
                                 <has-error :form="form" field="package_quantity"></has-error>
                              </div>
 

@@ -214,7 +214,7 @@ export default {
                         'success'
                     );
 
-                    this.progress.finish();
+                    this.$Progress.finish();
 
                 })
                 .catch(() => {
