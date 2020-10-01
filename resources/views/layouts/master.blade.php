@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
      <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <router-link class="nav-link" data-widget="pushmenu" to="#" role="button"><i class="fas fa-bars"></i></router-link>
+        <a class="nav-link" data-widget="pushmenu" to="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       {{-- <li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
@@ -185,7 +185,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <img src="{{ asset('img/logo') . '/' . $company->companylogo }}" alt="logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
            @endforeach
-      <span class="brand-text font-weight-light">{{ 'Jobes Company' }}</span>
+
+            <span class="brand-text font-weight-heavy small">{{ $company->companyname }}</span>
+
+
     </router-link>
 
     <!-- Sidebar -->
@@ -302,7 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <router-link to="/package" class="nav-link">
                   <i class="nav-icon fas fa-box"></i>
                   <p>
-                    {{ 'Request Sending  Parsel' }}
+                    {{ 'Request Sending  Package' }}
 
                   </p>
                 </router-link>
@@ -460,7 +463,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div> --}}
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017-2020 <router-link to="goddymj@gmail.com">{{ 'CodersGroup' }}</router-link>.</strong> {{ 'All rights reserved.' }}
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | <i class="fa fa-heart" aria-hidden="true"></i> by <a href="goddymj@gmail.com" target="_blank">GoBRIGHT</a>
   </footer>
 </div>
 <!-- ./wrapper -->

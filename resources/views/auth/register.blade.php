@@ -43,6 +43,20 @@
             </div>
 
             <div class="input-group mb-3">
+              <input id="phone" type="tel" placeholder="Phone Number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-phone"></span>
+              </div>
+            </div>
+            @error('phone')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+          </div>
+
+            <div class="input-group mb-3">
                 <input id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
               <div class="input-group-append">
                 <div class="input-group-text">

@@ -80,11 +80,11 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
-	        	<li class="nav-item active"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
+	        	<li class="nav-item "><a href="{{ url('/') }}" class="nav-link">Home</a></li>
 	        	<li class="nav-item"><a href="{{ route('about.index') }}" class="nav-link">About</a></li>
 	        	<li class="nav-item"><a href="{{ route('services.index') }}" class="nav-link">Services</a></li>
 	        	<li class="nav-item"><a href="{{ route('news.index') }}" class="nav-link">News</a></li>
-                <li class="nav-item"><a href="{{ route('contactus.index') }}" class="nav-link">Contact us</a></li>
+                <li class="nav-item active"><a href="{{ route('contactus.index') }}" class="nav-link">Contact us</a></li>
             </ul>
             @if (Route::has('login'))
             <div class="float-left">
@@ -178,8 +178,14 @@
 
                                                 <div class="col-md-6">
 													<div class="form-group">
-														<input type="tel" class="form-control" name="phone" id="phone" required placeholder="phone">
-													</div>
+														<input type="tel" class="form-control" name="phone" id="phone" required placeholder="phone" class="form-control @error('phone') is-invalid @enderror"  value="{{ old('phone') }}"  autocomplete="phone" autofocus>
+
+                                                        </div>
+                                                        @error('phone')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
@@ -324,7 +330,7 @@
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is customized with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="goddymj@gmail.com" target="_blank">GoBRIGHT</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>
